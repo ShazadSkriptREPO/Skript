@@ -36,6 +36,9 @@ zwracanieeq: '&aTwoje eq jest teraz zwracane zaczekaj chwile'
 #EQ zwrócone
 eqzwrocone: '&aTwoje eq zostalo zwrocone'
 
+EQ zapisane
+eqzapisane: 'Twoje eq zostalo zapisane pomyslnie"
+
 #NiePrzyznanie sie do wspomagaczy
 nieprzyznanie: '&aGracz nie przyznal sie do cheatow musi byc sprawdzany" to ops
 
