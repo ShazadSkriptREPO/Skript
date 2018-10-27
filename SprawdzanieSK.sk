@@ -54,7 +54,7 @@ on right click on a player with a %{_narzedzieid}%:
 			wait 2 tick
 			format slot 0 of player with lava bucket named "SPRAWDZ GRACZA %clicked entity%" to close then run "sprawdzaniee %clicked entity%"
 			format slot 1 of player with water bottle named "SPRAWDZ TEST EQ ODNAWIANIE CZYSTY" to close then run "czystyy %clicked entity%"
-			format slot 2 of player with stone named "SPRAWDZ EQ" to close then run "sprawdzeq3 %clicked entity%"
+			format slot 2 of player with stone named "SPRAWDZ EQ" to close then run "sprawdzeq2 %clicked entity%"
 			format slot 3 of player with stone named " " to close
 			format slot 4 of player with stone named " " to close
 			format slot 5 of player with stone named " " to close
