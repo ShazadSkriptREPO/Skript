@@ -45,7 +45,7 @@ command /sprtest:
 		give {_narzedzienazwa} named {_narzedzie} to player
 		send "&aNarzedzie dodane do twojego ekwipunku."
 #GUI ADMINA
-on right click on a player with a %{_narzedzieid}%:
+on right click on a player with a {_narzedzieid}:
 	if player has permission "all.spr":
 		name of tool is "%{_narzedzienazwa}%":
 			set {_guinazwa} to yaml value "gui" from "SprawdzanieCONFIG/config.yml"
