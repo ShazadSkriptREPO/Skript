@@ -1,17 +1,58 @@
-#By __Shazad__ for MCYOU.PL
-#Copyright MCYOU.PL
+#------------------------------------------------------------------------------------------                                                                                      
+#  ____           _____ _                        _ 
+# |  _ \         / ____| |                      | |
+# | |_) |_   _  | (___ | |__   __ _ ______ _  __| |
+# |  _ <| | | |  \___ \| '_ \ / _` |_  / _` |/ _` |
+# | |_) | |_| |  ____) | | | | (_| |/ / (_| | (_| |
+# |____/ \__, | |_____/|_| |_|\__,_/___\__,_|\__,_|
+#         __/ |                                    
+#        |___/  
+# Zabraniam podszywania się pod autora skryptu. Wszelkie próby tego typu będą karane.
+# Edytować można jedynie za moją zgodą.
+
+#Sprawdzanie 1.0#
+
+on load:
+	set {_version} to content of file "plugins/Skript/scripts/%skript%.sk"
+	set {_v} to index of "##" in {_version}
+	set {_v2} to subtext of {_version} from character ({_v}+1) to character (length of {_version})
+	set {_v3} to index of "##" in {_v2}
+	set {version} to subtext of {_version} from character ({_v}+1) to character ({_v3})
+	set {_version} to result of connect to "https://raw.githubusercontent.com/ShazadSkriptREPO/Skript1/master/SprawdzanieSK.sk"
+	set {_v} to index of "##" in {_version}
+	set {_v2} to subtext of {_version} from character ({_v}+1) to character (length of {_version})
+	set {_v3} to index of "##" in {_v2}
+	set {version.new} to subtext of {_version} from character ({_v}+1) to character ({_v3})
+	{version} is not {version.new}:
+		download "https://raw.githubusercontent.com/ShazadSkriptREPO/Skript1/master/SprawdzanieSK.sk" to "plugins/Skript/scripts/%skript%.sk"
+		download from "https://raw.githubusercontent.com/ShazadSkriptREPO/Skript1/master/SprawdzanieCONFIG" to "plugins/Skript/scripts/SprawdzanieCONFIG/config.yml"
+		set {tempban} to single value "tempban" get of "plugins/Skript/SprawdzanieCONFIG/config.yml"
+		stop
+	if folder "plugins/Skript/SprawdzanieCONFIG" doesn't exists:
+		send "&cNie znaleziono folderu z configiem &b""SprawdzanieCONFIG""!" to console
+		send "Tworzenie..." to console
+		create folder "plugins/Skript/SprawdzanieCONFIG"
+		send "Folder ""SprawdzanieCONFIG"" zostal pomyslnie utworzony!" to console	
+	if file "plugins/Skript/SprawdzanieCONFIG/config.yml" doesn't exists:
+		send "Nie znaleziono pliku ""config.yml""!" to console
+		send "Tworzenie..." to console
+		create file "plugins/Skript/SprawdzanieCONFIG/config.yml"﻿
+		
 command /sprtest:
 	permission: all.spr
 	permission message: Nie mozesz tego zrobic
 	trigger:
-		give player 1 blaze rod named "&aNarzedzia Admina"
+		set {_narzedzienazwa} to yaml value "narzedzienazwa" from "SprawdzanieCONFIG/config.yml"
+		set {_narzedzieid} to yaml value "narzedzieid" from "SprawdzanieCONFIG/config.yml"
+		give player 1 %{_narzedzienazwa}% named "%{_narzedzie}%"
 		send "&aNarzedzie dodane do twojego ekwipunku."
 #GUI ADMINA
-on right click on a player with a blaze rod:
+on right click on a player with a %{_narzedzieid}%:
 	if player has permission "all.spr":
-		name of tool is "&aNarzedzia Admina":
+		name of tool is "%{_narzedzienazwa}%":
+			set {_guinazwa} to yaml value "gui" from "SprawdzanieCONFIG/config.yml"
 			set %clicked entity% to "eq.gracz.%clicked entity%"
-			open chest with 1 rows named "&cNarzedzia Admina" to player
+			open chest with 1 rows named "%{_gui}%" to player
 			wait 2 tick
 			format slot 0 of player with lava bucket named "SPRAWDZ GRACZA %clicked entity%" to close then run "sprawdzaniee %clicked entity%"
 			format slot 1 of player with water bottle named "SPRAWDZ TEST EQ ODNAWIANIE CZYSTY" to close then run "czystyy %clicked entity%"
@@ -33,14 +74,17 @@ command /sprawdzaniee [<player>]:
 			set {aftertp.%arg 1%} to arg 1's location
 			teleport arg-1 to {LokSPR}
 			teleport player to {LokSPR}
-			send "EQ ZAPISYWANE JESTES TERAZ SPRAWDZANY" to arg-1
+			set {_zapisywanieeq} to yaml value "zapisywanieeq" from "SprawdzanieCONFIG/config.yml"
+			send "%{_zapisywanieeq}%" to arg-1
 			wait 5 ticks
 			set {ekwipunek.%player-arg%} to serialized inventory of player-arg
 			set {inv.%player-arg%.helmet} to arg 1's helmet
 			set {inv.%player-arg%.chest} to arg 1's chestplate
 			set {inv.%player-arg%.legg} to arg 1's leggings
 			set {inv.%player-arg%.boots} to arg 1's boots
-			send "&aEQ ZAPISANE" to arg-1
+			set {_eqzapisane} to yaml value "eqzapisane" from "SprawdzanieCONFIG/config.yml"
+			send "%{_eqzapisane}%" to arg-1
+			wait 5 ticks
 			clear arg 1's inventory
 			set {sprawdzanie} to true
 			set {sprawdzanie.arg-1} to true
@@ -52,8 +96,11 @@ command /czystyy [<player>]:
 	permission message: Nie mozesz tego zrobic
 	trigger:
 		teleport argument-1 to {aftertp.%arg 1%}
-		send "sprawdzanie zakonczone" to arg-1
-		send "&aTwoje eq jest teraz zwracane! Zaczekaj chwile" to arg-1
+		set {_sprawdzaniekoniec} to yaml value "sprawdzaniekoniec" from "SprawdzanieCONFIG/config.yml"
+		set {_eqzwrocone} to yaml value "eqzwrocone" from "SprawdzanieCONFIG/config.yml"
+		set {_zwracanieeq} to yaml value "zwracanieeq" from "SprawdzanieCONFIG/config.yml"
+		send "%{_sprawdzaniekoniec}%" to arg-1
+		send "%{_zwracanieeq}%" to arg-1
 		wait 2 seconds
 		set arg 1's helmet to {inv.%player-arg%.helmet}
 		set arg 1's chestplate to {inv.%player-arg%.chest}
@@ -62,7 +109,7 @@ command /czystyy [<player>]:
 		wait 1 second
 		restore inventory of player-arg from {ekwipunek.%player-arg%}
 		wait 1 second
-		send "&cEQ ZWROCONE" to arg-1
+		send "%{_eqzwrocone%" to arg-1
 		clear {aftertp.%arg 1%}
 		set {sprawdzanie} to false
 		set {sprawdzanie.region} to false
@@ -83,15 +130,24 @@ command /sprawdzaniegui:
 			format slot 2 of player with red glass named " " to close		
 			format slot 3 of player with stone named " " to close
 			format slot 4 of player with tripwire hook named "&c&lNieprzyznanie SIE" to close then run "nieprzyznanie %player%"
-			format slot 5 of player with blaze powder named "&c&lPRZYZNANIE SIE" to close then run "tempban %player% 24h Przyznanie sie do wspomagaczy."
+			format slot 5 of player with blaze powder named "&c&lPRZYZNANIE SIE" to close then run "banicja %player%"
 			format slot 6 of player with red glass named " " to close
 			format slot 7 of player with red glass named " " to close
 			format slot 8 of player with red glass named " " to close
 		else:
 			send "&c Nikt nie jest teraz sprawdzany, nie mozesz tego zrobic"
+command /banicja [<player>]:
+	permission: all.spr
+	trigger:
+			set {_komendatresc} to yaml value "ban" from "SprawdzanieCONFIG/config.yml"
+			replace all "(nick)" with "%player-arg%" in {_komendatresc}
+			execute console command "/%{_komendatresc}%"
 command /nieprzyznanie [<player>]:
 	trigger:
 		if arg-player is online:
+			set {_nieprzyznanie} to yaml value "zwracanieeq" from "SprawdzanieCONFIG/config.yml"
+			replace all "(nick)" with "%player-arg%" in {_nieprzyznanie}
+			send "%{_nieprzyznanie}%" to arg-1
 			send "&aGracz %arg-player% nie przyznal sie do cheatow musi byc sprawdzany" to ops
 		else:
 			send "&cGracz %arg-player% nie jest aktywny na serwerze."
