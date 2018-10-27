@@ -1,0 +1,158 @@
+#By __Shazad__ for MCYOU.PL
+#Copyright MCYOU.PL
+command /sprtest:
+	permission: all.spr
+	permission message: Nie mozesz tego zrobic
+	trigger:
+		give player 1 blaze rod named "&aNarzedzia Admina"
+		send "&aNarzedzie dodane do twojego ekwipunku."
+#GUI ADMINA
+on right click on a player with a blaze rod:
+	if player has permission "all.spr":
+		name of tool is "&aNarzedzia Admina":
+			set %clicked entity% to "eq.gracz.%clicked entity%"
+			open chest with 1 rows named "&cNarzedzia Admina" to player
+			wait 2 tick
+			format slot 0 of player with lava bucket named "SPRAWDZ GRACZA %clicked entity%" to close then run "sprawdzaniee %clicked entity%"
+			format slot 1 of player with water bottle named "SPRAWDZ TEST EQ ODNAWIANIE CZYSTY" to close then run "czystyy %clicked entity%"
+			format slot 2 of player with stone named "SPRAWDZ EQ" to close then run "sprawdzeq2 %clicked entity%"
+			format slot 3 of player with stone named " " to close
+			format slot 4 of player with stone named " " to close
+			format slot 5 of player with stone named " " to close
+			format slot 6 of player with stone named " " to close
+			format slot 7 of player with stone named " " to close
+			format slot 8 of player with stone named " " to close
+			stop
+	else:
+		send "&cBrak permisji do uzywanie tego"
+command /sprawdzaniee [<player>]:
+	permission: all.spr
+	permission message: Nie mozesz tego zrobic
+	trigger:
+		if arg-player is online:
+			set {aftertp.%arg 1%} to arg 1's location
+			teleport arg-1 to {LokSPR}
+			teleport player to {LokSPR}
+			send "EQ ZAPISYWANE JESTES TERAZ SPRAWDZANY" to arg-1
+			wait 5 ticks
+			set {ekwipunek.%player-arg%} to serialized inventory of player-arg
+			set {inv.%player-arg%.helmet} to arg 1's helmet
+			set {inv.%player-arg%.chest} to arg 1's chestplate
+			set {inv.%player-arg%.legg} to arg 1's leggings
+			set {inv.%player-arg%.boots} to arg 1's boots
+			send "&aEQ ZAPISANE" to arg-1
+			clear arg 1's inventory
+			set {sprawdzanie} to true
+			set {sprawdzanie.arg-1} to true
+			set {sprawdzanie.region} to true
+		else:
+			send "&cGracz %arg-player% nie jest aktywny na serwerze."
+command /czystyy [<player>]:
+	permission: all.spr
+	permission message: Nie mozesz tego zrobic
+	trigger:
+		teleport argument-1 to {aftertp.%arg 1%}
+		send "sprawdzanie zakonczone" to arg-1
+		send "&aTwoje eq jest teraz zwracane! Zaczekaj chwile" to arg-1
+		wait 2 seconds
+		set arg 1's helmet to {inv.%player-arg%.helmet}
+		set arg 1's chestplate to {inv.%player-arg%.chest}
+		set arg 1's leggings to {inv.%player-arg%.legg}
+		set arg 1's boots to {inv.%player-arg%.boots}
+		wait 1 second
+		restore inventory of player-arg from {ekwipunek.%player-arg%}
+		wait 1 second
+		send "&cEQ ZWROCONE" to arg-1
+		clear {aftertp.%arg 1%}
+		set {sprawdzanie} to false
+		set {sprawdzanie.region} to false
+on rightclick on a sign:
+	if player has permission "sprawdzany.gracz":
+		if line 1 of event-block is "&c&lSPRAWDZANIE":
+			if line 3 of event-block is "&4&lKLIK MNIE":
+				make player execute command "sprawdzaniegui"
+command /sprawdzaniegui:
+	permission: all.spr
+	permission message: Nie mozesz tego zrobic
+	trigger:
+		if {sprawdzanie} is true:
+			open chest with 1 rows named "&cSPRAWDZANIE" to player
+			wait 2 tick
+			format slot 0 of player with red glass named " " to close
+			format slot 1 of player with red glass named " " to close
+			format slot 2 of player with red glass named " " to close		
+			format slot 3 of player with stone named " " to close
+			format slot 4 of player with tripwire hook named "&c&lNieprzyznanie SIE" to close then run "nieprzyznanie %player%"
+			format slot 5 of player with blaze powder named "&c&lPRZYZNANIE SIE" to close then run "tempban %player% 24h Przyznanie sie do wspomagaczy."
+			format slot 6 of player with red glass named " " to close
+			format slot 7 of player with red glass named " " to close
+			format slot 8 of player with red glass named " " to close
+		else:
+			send "&c Nikt nie jest teraz sprawdzany, nie mozesz tego zrobic"
+command /nieprzyznanie [<player>]:
+	trigger:
+		if arg-player is online:
+			send "&aGracz %arg-player% nie przyznal sie do cheatow musi byc sprawdzany" to ops
+		else:
+			send "&cGracz %arg-player% nie jest aktywny na serwerze."
+command /lokacjaspr:
+	permission: all.spr
+	permission message: Nie mozesz tego zrobic
+	trigger:
+		set {LokSPR} to location of player
+
+command /sprawdzeq2 <player>:
+	permission: view.view
+	trigger:
+		set {target.%player%} to arg 1
+		wait 1 tick
+		open chest with 5 rows named "%arg 1%" to player
+		set {_playerinv} to arg 1
+		set {_slot} to 0
+		loop 36 times:
+			set {view.%arg 1%.%{_slot}%} to slot {_slot} of arg 1's inventory
+			add 1 to {_slot}
+		set {_slot} to 0
+		set {_slotmenu} to 9
+		wait 1 tick
+		loop 36 times:
+			format slot {_slotmenu} of player with {view.%arg 1%.%{_slot}%} to be unstealable
+			add 1 to {_slot}
+			add 1 to {_slotmenu}
+		set {_health.%arg 1%} to arg 1's health
+		set {hunger.%arg 1%} to arg 1's hunger
+		set {sprawdzeq.helmet.%arg 1%} to arg 1's helmet
+		set {sprawdzeq.chestplate.%arg 1%} to arg 1's chestplate
+		set {sprawdzeq.leggings.%arg 1%} to arg 1's leggings
+		set {sprawdzeq.boots.%arg 1%} to arg 1's boots
+		if arg 1's gamemode is survival:
+			format slot 3 of player with 20 glistering melon named "&cPlayer health points" with lore "&6%{_health.%arg 1%}% ?" to be unstealable
+		if arg 1's gamemode is survival:
+			format slot 2 of player with 4 diamond chestplate named "&cPlayer armor" to close then run [make player execute command "sprawdzeq %arg 1%"]
+		else:
+			format slot 2 of player with 4 diamond chestplate named "&cPlayer armor" to close then run [make player execute command "sprawdzeq %arg 1%"]
+		format slot 6 of player with 2 paper named "&eUaktualnij!" with lore "&7" to close then run [make player execute command "vreload"]
+command /s:
+	permission: view.view
+	trigger:
+		wait 2 ticks
+		make player execute command "sprawdzeq %{target.%player%}%"
+command /sprawdzeq <player>:
+	permission: view.view
+	trigger:
+		open chest with 1 row named "%arg 1%" to player
+		wait 2 tick
+		set {armor.%arg 1%.1} to helmet of arg 1
+		set {armor.%arg 1%.2} to chestplate of arg 1
+		set {armor.%arg 1%.3} to leggings of arg 1
+		set {armor.%arg 1%.4} to boots of arg 1
+		format slot 0 of player with {armor.%arg 1%.1} to be unstealable
+		format slot 1 of player with {armor.%arg 1%.2} to be unstealable
+		format slot 2 of player with {armor.%arg 1%.3} to be unstealable
+		format slot 3 of player with {armor.%arg 1%.4} to be unstealable
+		format slot 7 of player with 1 paper named "&cZaktualizuj"  to close then run [make player execute command "sprawdzeq %arg 1%"]
+command /sprawdzeq <player>:
+	permission: view.view
+	trigger:
+		wait 2 ticks
+		make player execute command "aview %arg 1%"
