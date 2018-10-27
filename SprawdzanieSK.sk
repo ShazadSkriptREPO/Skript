@@ -42,7 +42,7 @@ command /sprtest:
 	trigger:
 		set {_narzedzienazwa} to yaml value "narzedzienazwa" from "SprawdzanieCONFIG/config.yml"
 		set {_narzedzieid} to yaml value "narzedzieid" from "SprawdzanieCONFIG/config.yml"
-		give player 1 %{_narzedzienazwa}% named "%{_narzedzie}%"
+		give {_narzedzienazwa} named {_narzedzie} to player
 		send "&aNarzedzie dodane do twojego ekwipunku."
 #GUI ADMINA
 on right click on a player with a %{_narzedzieid}%:
