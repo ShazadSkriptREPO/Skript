@@ -1,0 +1,42 @@
+#------------------------------------------------------------------------------------------                                                                                      
+#  ____           _____ _                        _ 
+# |  _ \         / ____| |                      | |
+# | |_) |_   _  | (___ | |__   __ _ ______ _  __| |
+# |  _ <| | | |  \___ \| '_ \ / _` |_  / _` |/ _` |
+# | |_) | |_| |  ____) | | | | (_| |/ / (_| | (_| |
+# |____/ \__, | |_____/|_| |_|\__,_/___\__,_|\__,_|
+#         __/ |                                    
+#        |___/  
+#------------------------------------------------------------------------------------------  
+#Sprawdzanie 1.0#
+#
+#Komenda wykonywana przez konsole (nick) zastępuje nick gracza
+ban: 'ban (nick) Przyznanie sie do wspomagaczy!'
+
+#Nazwa narzędzia do sprawdzania
+narzedzie: '&aSprawdzanie'
+
+#Id narzędzia do sprawdzania lub angielska nazwa
+narzedzieid: 'blaze rod'
+
+#Nazwa GUI Admina
+gui: '&aMenu Sprawdzania Admina"
+
+#Wiadomości
+
+#Zapisywanie EQ wiadomosc do sprawdzanego
+zapisywanieeq: '&6Jestes sprawdzany! &bTrwa zapisywanie twojego eq zaczekaj chwile"
+
+#Koniec sprawdzania gracz jest czysty
+sprawdzaniekoniec: '&2Jestes czysty sprawdzanie zakonczone!'
+
+#Zwracanie eq wiadomość do gracza
+zwracanieeq: '&aTwoje eq jest teraz zwracane zaczekaj chwile'
+
+#EQ zwrócone
+eqzwrocone: '&aTwoje eq zostalo zwrocone'
+
+#NiePrzyznanie sie do wspomagaczy
+nieprzyznanie: '&aGracz nie przyznal sie do cheatow musi byc sprawdzany" to ops
+
+#Koniec Configu
