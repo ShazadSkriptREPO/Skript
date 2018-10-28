@@ -56,23 +56,21 @@ command /sprtest:
 		send "&aNarzedzie dodane do twojego ekwipunku."
 #GUI ADMINA
 on right click on a player:
-	if player's tool is {_narzedzieid}:
+	if player's tool is "%{_narzedzienazwa}%":
 		if player has permission "all.spr":
 			set %clicked entity% to "eq.gracz.%clicked entity%"
-			name of tool is "%{_narzedzienazwa}%":
-				set %clicked entity% to "eq.gracz.%clicked entity%"
-				open chest with 1 rows named "%{_gui}%" to player
-				wait 2 tick
-				format slot 0 of player with lava bucket named "SPRAWDZ GRACZA %clicked entity%" to close then run "sprawdzaniee %clicked entity%"
-				format slot 1 of player with water bottle named "SPRAWDZ TEST EQ ODNAWIANIE CZYSTY" to close then run "czystyy %clicked entity%"
-				format slot 2 of player with stone named "SPRAWDZ EQ" to close then run "sprawdzeq2 %clicked entity%"
-				format slot 3 of player with stone named " " to close
-				format slot 4 of player with stone named " " to close
-				format slot 5 of player with stone named " " to close
-				format slot 6 of player with stone named " " to close
-				format slot 7 of player with stone named " " to close
-				format slot 8 of player with stone named " " to close
-				stop
+			open chest with 1 rows named "%{_gui}%" to player
+			wait 2 tick
+			format slot 0 of player with lava bucket named "SPRAWDZ GRACZA %clicked entity%" to close then run "sprawdzaniee %clicked entity%"
+			format slot 1 of player with water bottle named "SPRAWDZ TEST EQ ODNAWIANIE CZYSTY" to close then run "czystyy %clicked entity%"
+			format slot 2 of player with stone named "SPRAWDZ EQ" to close then run "sprawdzeq2 %clicked entity%"
+			format slot 3 of player with stone named " " to close
+			format slot 4 of player with stone named " " to close
+			format slot 5 of player with stone named " " to close
+			format slot 6 of player with stone named " " to close
+			format slot 7 of player with stone named " " to close
+			format slot 8 of player with stone named " " to close
+			stop
 		else:
 			send "&cBrak permisji do uzywanie tego"
 command /sprawdzaniee [<player>]:
