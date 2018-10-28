@@ -25,7 +25,6 @@ on load:
 	set {version.new} to subtext of {_version} from character ({_v}+1) to character ({_v3})
 	{version} is not {version.new}:
 		download "https://raw.githubusercontent.com/ShazadSkriptREPO/Skript1/master/SprawdzanieSK.sk" to "plugins/Skript/scripts/SprawdzanieSK.sk"
-		download from "https://raw.githubusercontent.com/ShazadSkriptREPO/Skript1/master/SprawdzanieCONFIG" to "plugins/Skript/scripts/SprawdzanieCONFIG/config.yml"
 		set {tempban} to single value "tempban" get of "plugins/Skript/SprawdzanieCONFIG/config.yml"
 		stop
 	if folder "plugins/Skript/SprawdzanieCONFIG" doesn't exists:
@@ -34,7 +33,10 @@ on load:
 		create folder "plugins/Skript/SprawdzanieCONFIG"
 		send "Folder ""SprawdzanieCONFIG"" zostal pomyslnie utworzony!" to console	
 	if file "plugins/Skript/SprawdzanieCONFIG/config.yml" doesn't exists:
-		send "Nie znaleziono pliku ""config.yml""!" to console
+		send "&cNie znaleziono configu.. trwa pobieranie"
+		wait 3 seconds
+		download from "https://raw.githubusercontent.com/ShazadSkriptREPO/Skript1/master/SprawdzanieCONFIG" to "plugins/Skript/scripts/SprawdzanieCONFIG/config.yml"
+		send "&aPobrano config! :D"
 		
 command /sprtest:
 	permission: all.spr
@@ -45,25 +47,26 @@ command /sprtest:
 		give {_narzedzienazwa} named {_narzedzie} to player
 		send "&aNarzedzie dodane do twojego ekwipunku."
 #GUI ADMINA
-on right click on a player with {_narzedzieid}:
-	if player has permission "all.spr":
-		name of tool is "%{_narzedzienazwa}%":
-			set {_guinazwa} to yaml value "gui" from "SprawdzanieCONFIG/config.yml"
-			set %clicked entity% to "eq.gracz.%clicked entity%"
-			open chest with 1 rows named "%{_gui}%" to player
-			wait 2 tick
-			format slot 0 of player with lava bucket named "SPRAWDZ GRACZA %clicked entity%" to close then run "sprawdzaniee %clicked entity%"
-			format slot 1 of player with water bottle named "SPRAWDZ TEST EQ ODNAWIANIE CZYSTY" to close then run "czystyy %clicked entity%"
-			format slot 2 of player with stone named "SPRAWDZ EQ" to close then run "sprawdzeq2 %clicked entity%"
-			format slot 3 of player with stone named " " to close
-			format slot 4 of player with stone named " " to close
-			format slot 5 of player with stone named " " to close
-			format slot 6 of player with stone named " " to close
-			format slot 7 of player with stone named " " to close
-			format slot 8 of player with stone named " " to close
-			stop
-	else:
-		send "&cBrak permisji do uzywanie tego"
+on right click on a player:
+	if player's tool is {_narzedzieid}:
+		if player has permission "all.spr":
+			name of tool is "%{_narzedzienazwa}%":
+				set {_guinazwa} to yaml value "gui" from "SprawdzanieCONFIG/config.yml"
+				set %clicked entity% to "eq.gracz.%clicked entity%"
+				open chest with 1 rows named "%{_gui}%" to player
+				wait 2 tick
+				format slot 0 of player with lava bucket named "SPRAWDZ GRACZA %clicked entity%" to close then run "sprawdzaniee %clicked entity%"
+				format slot 1 of player with water bottle named "SPRAWDZ TEST EQ ODNAWIANIE CZYSTY" to close then run "czystyy %clicked entity%"
+				format slot 2 of player with stone named "SPRAWDZ EQ" to close then run "sprawdzeq2 %clicked entity%"
+				format slot 3 of player with stone named " " to close
+				format slot 4 of player with stone named " " to close
+				format slot 5 of player with stone named " " to close
+				format slot 6 of player with stone named " " to close
+				format slot 7 of player with stone named " " to close
+				format slot 8 of player with stone named " " to close
+				stop
+		else:
+			send "&cBrak permisji do uzywanie tego"
 command /sprawdzaniee [<player>]:
 	permission: all.spr
 	permission message: Nie mozesz tego zrobic
