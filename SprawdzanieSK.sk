@@ -33,10 +33,10 @@ on load:
 		create folder "plugins/Skript/SprawdzanieCONFIG"
 		send "Folder ""SprawdzanieCONFIG"" zostal pomyslnie utworzony!" to console	
 	if file "plugins/Skript/SprawdzanieCONFIG/config.yml" doesn't exists:
-		send "&cNie znaleziono configu.. trwa pobieranie"
+		send "&cNie znaleziono configu.. trwa pobieranie" to console
 		wait 3 seconds
 		download from "https://raw.githubusercontent.com/ShazadSkriptREPO/Skript1/master/SprawdzanieCONFIG" to "plugins/Skript/scripts/SprawdzanieCONFIG/config.yml"
-		send "&aPobrano config! :D"
+		send "&aPobrano config! :D" to console
 		
 command /sprtest:
 	permission: all.spr
