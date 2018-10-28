@@ -36,14 +36,22 @@ on load:
 		send "&cNie znaleziono configu.. trwa pobieranie" to console
 		wait 3 seconds
 		download from "https://raw.githubusercontent.com/ShazadSkriptREPO/Skript1/master/SprawdzanieCONFIG" to "plugins/Skript/scripts/SprawdzanieCONFIG/config.yml"
+		set {_guinazwa} to yaml value "gui" from "SprawdzanieCONFIG/config.yml"
+		set {_narzedzienazwa} to yaml value "narzedzienazwa" from "SprawdzanieCONFIG/config.yml"
+		set {_narzedzieid} to yaml value "narzedzieid" from "SprawdzanieCONFIG/config.yml"
+		set {_zapisywanieeq} to yaml value "zapisywanieeq" from "SprawdzanieCONFIG/config.yml"
+		set {_sprawdzaniekoniec} to yaml value "sprawdzaniekoniec" from "SprawdzanieCONFIG/config.yml"
+		set {_eqzwrocone} to yaml value "eqzwrocone" from "SprawdzanieCONFIG/config.yml"
+		set {_zwracanieeq} to yaml value "zwracanieeq" from "SprawdzanieCONFIG/config.yml"
+		set {_komendatresc} to yaml value "ban" from "SprawdzanieCONFIG/config.yml"
+		set {_nieprzyznanie} to yaml value "zwracanieeq" from "SprawdzanieCONFIG/config.yml"
+		set {_eqzapisane} to yaml value "eqzapisane" from "SprawdzanieCONFIG/config.yml"
 		send "&aPobrano config! :D" to console
 		
 command /sprtest:
 	permission: all.spr
 	permission message: Nie mozesz tego zrobic
 	trigger:
-		set {_narzedzienazwa} to yaml value "narzedzienazwa" from "SprawdzanieCONFIG/config.yml"
-		set {_narzedzieid} to yaml value "narzedzieid" from "SprawdzanieCONFIG/config.yml"
 		give {_narzedzienazwa} named {_narzedzie} to player
 		send "&aNarzedzie dodane do twojego ekwipunku."
 #GUI ADMINA
@@ -51,7 +59,6 @@ on right click on a player:
 	if player's tool is {_narzedzieid}:
 		if player has permission "all.spr":
 			name of tool is "%{_narzedzienazwa}%":
-				set {_guinazwa} to yaml value "gui" from "SprawdzanieCONFIG/config.yml"
 				set %clicked entity% to "eq.gracz.%clicked entity%"
 				open chest with 1 rows named "%{_gui}%" to player
 				wait 2 tick
@@ -75,7 +82,6 @@ command /sprawdzaniee [<player>]:
 			set {aftertp.%arg 1%} to arg 1's location
 			teleport arg-1 to {LokSPR}
 			teleport player to {LokSPR}
-			set {_zapisywanieeq} to yaml value "zapisywanieeq" from "SprawdzanieCONFIG/config.yml"
 			send "%{_zapisywanieeq}%" to arg-1
 			wait 5 ticks
 			set {ekwipunek.%player-arg%} to serialized inventory of player-arg
@@ -83,7 +89,6 @@ command /sprawdzaniee [<player>]:
 			set {inv.%player-arg%.chest} to arg 1's chestplate
 			set {inv.%player-arg%.legg} to arg 1's leggings
 			set {inv.%player-arg%.boots} to arg 1's boots
-			set {_eqzapisane} to yaml value "eqzapisane" from "SprawdzanieCONFIG/config.yml"
 			send "%{_eqzapisane}%" to arg-1
 			wait 5 ticks
 			clear arg 1's inventory
@@ -97,9 +102,6 @@ command /czystyy [<player>]:
 	permission message: Nie mozesz tego zrobic
 	trigger:
 		teleport argument-1 to {aftertp.%arg 1%}
-		set {_sprawdzaniekoniec} to yaml value "sprawdzaniekoniec" from "SprawdzanieCONFIG/config.yml"
-		set {_eqzwrocone} to yaml value "eqzwrocone" from "SprawdzanieCONFIG/config.yml"
-		set {_zwracanieeq} to yaml value "zwracanieeq" from "SprawdzanieCONFIG/config.yml"
 		send "%{_sprawdzaniekoniec}%" to arg-1
 		send "%{_zwracanieeq}%" to arg-1
 		wait 2 seconds
@@ -140,13 +142,11 @@ command /sprawdzaniegui:
 command /banicja [<player>]:
 	permission: all.spr
 	trigger:
-		set {_komendatresc} to yaml value "ban" from "SprawdzanieCONFIG/config.yml"
 		replace all "(nick)" with "%player-arg%" in {_komendatresc}
 		execute console command "/%{_komendatresc}%"
 command /nieprzyznanie [<player>]:
 	trigger:
 		if arg-player is online:
-			set {_nieprzyznanie} to yaml value "zwracanieeq" from "SprawdzanieCONFIG/config.yml"
 			replace all "(nick)" with "%player-arg%" in {_nieprzyznanie}
 			send "%{_nieprzyznanie}%" to arg-1
 			send "&aGracz %arg-player% nie przyznal sie do cheatow musi byc sprawdzany" to ops
