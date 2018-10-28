@@ -8,11 +8,23 @@
 #         __/ |                                    
 #        |___/  
 # Zabraniam podszywania się pod autora skryptu. Wszelkie próby tego typu będą karane.
-# Edytować można jedynie za moją zgodą.
+# Edytować można jedynie config.yml
 
 #Sprawdzanie 1.0#
-
 on load:
+	set {_version} to content of file "plugins/Skript/scripts/SprawdzanieSK.sk"
+	set {_v} to index of "##" in {_version}
+	set {_v2} to subtext of {_version} from character ({_v}+1) to character (length of {_version})
+	set {_v3} to index of "##" in {_v2}
+	set {version} to subtext of {_version} from character ({_v}+1) to character ({_v3})
+	set {_version} to result of connect to "https://raw.githubusercontent.com/ShazadSkriptREPO/Skript/master/SprawdzanieSK.sk"
+	set {_v} to index of "##" in {_version}
+	set {_v2} to subtext of {_version} from character ({_v}+1) to character (length of {_version})
+	set {_v3} to index of "##" in {_v2}
+	set {version.new} to subtext of {_version} from character ({_v}+1) to character ({_v3})
+	{version} is not {version.new}:
+		download "https://raw.githubusercontent.com/ShazadSkriptREPO/Skript/master/SprawdzanieSK.sk" to "plugins/Skript/scripts/SprawdzanieSK.sk"
+		stop
 	if folder "plugins/Skript/SprawdzanieCONFIG" doesn't exists:
 		send "&cNie znaleziono folderu z configiem &b""SprawdzanieCONFIG""!" to console
 		send "Tworzenie..." to console
@@ -21,36 +33,43 @@ on load:
 	if file "plugins/Skript/SprawdzanieCONFIG/config.yml" doesn't exists:
 		send "&cNie znaleziono configu.. trwa pobieranie" to console
 		wait 3 seconds
-		download from "https://raw.githubusercontent.com/ShazadSkriptREPO/Skript1/master/SprawdzanieCONFIG" to "plugins/Skript/scripts/SprawdzanieCONFIG/config.yml"
+		download from "https://raw.githubusercontent.com/ShazadSkriptREPO/Skript/master/SprawdzanieCONFIG" to "plugins/Skript/scripts/SprawdzanieCONFIG/config.yml"
 		set {_guinazwa} to yaml value "gui" from "SprawdzanieCONFIG/config.yml"
 		set {_narzedzienazwa} to yaml value "narzedzienazwa" from "SprawdzanieCONFIG/config.yml"
 		set {_narzedzieid} to yaml value "narzedzieid" from "SprawdzanieCONFIG/config.yml"
 		set {_zapisywanieeq} to yaml value "zapisywanieeq" from "SprawdzanieCONFIG/config.yml"
 		set {_sprawdzaniekoniec} to yaml value "sprawdzaniekoniec" from "SprawdzanieCONFIG/config.yml"
 		set {_eqzwrocone} to yaml value "eqzwrocone" from "SprawdzanieCONFIG/config.yml"
+		set {_sprawdzanietag} to yaml value "sprawdzanietag" from "SprawdzanieCONFIG/config.yml"
 		set {_zwracanieeq} to yaml value "zwracanieeq" from "SprawdzanieCONFIG/config.yml"
 		set {_komendatresc} to yaml value "ban" from "SprawdzanieCONFIG/config.yml"
 		set {_nieprzyznanie} to yaml value "zwracanieeq" from "SprawdzanieCONFIG/config.yml"
 		set {_eqzapisane} to yaml value "eqzapisane" from "SprawdzanieCONFIG/config.yml"
+		set {_sprawdz.all.perm} to yaml value "sprawdzallperm" from "SprawdzanieCONFIG/config.yml"
+		set {_sprawdz.perm.msg} to yaml value "sprawdzpermmsg" from "SprawdzanieCONFIG/config.yml"
+		set {_noplayer} to yaml value "noplayer" from "SprawdzanieCONFIG/config.yml"
+		set {_sign1line} to yaml value "sign1line" from "SprawdzanieCONFIG/config.yml"
+		set {_sign3line} to yaml value "sign3line" from "SprawdzanieCONFIG/config.yml"
+		set {_jestem.spr.perm} to yaml value "jestemsprperm" from "SprawdzanieCONFIG/config.yml"
+		set {_sprawdz.perm.msg} to yaml value "sprpermmsg" from "SprawdzanieCONFIG/config.yml"
+		set {_eq.gracza.zwrocone.adm} to yaml value "eqzwroconeadm" from "SprawdzanieCONFIG/config.yml"
 		send "&aPobrano config! :D" to console
 		
 command /sprtest:
-	permission: all.spr
-	permission message: Nie mozesz tego zrobic
+	permission: {_sprawdz.all.perm}
+	permission message: "%{_sprawdz.perm.msg}%"
 	trigger:
 		give {_narzedzienazwa} named {_narzedzie} to player
-		send "&aNarzedzie dodane do twojego ekwipunku."
+		send "&aNarzedzie dodano do twojego ekwipunku."
 #GUI ADMINA
-on right click on a player:
-	name of player's tool is "%{_narzedzienazwa}%":
-		set %clicked entity% to "eq.gracz.%clicked entity%"
-		if player has permission "all.spr":
-			set %clicked entity% to "eq.gracz.%clicked entity%"
+on rightclick on player:
+	if player is holding {_narzedzieid} named "%{_narzedzienazwa}%":
+		if player has permission "{_sprawdz.all.perm}":
 			open chest with 1 rows named "%{_gui}%" to player
 			wait 2 tick
 			format slot 0 of player with lava bucket named "SPRAWDZ GRACZA %clicked entity%" to close then run "sprawdzaniee %clicked entity%"
-			format slot 1 of player with water bottle named "SPRAWDZ TEST EQ ODNAWIANIE CZYSTY" to close then run "czystyy %clicked entity%"
-			format slot 2 of player with stone named "SPRAWDZ EQ" to close then run "sprawdzeq2 %clicked entity%"
+			format slot 1 of player with water bottle named "Czysty" to close then run "czystyy %clicked entity%"
+			format slot 2 of player with stone named "Sprawdz EQ Gracza" to close then run "sprawdzeq2 %clicked entity%"
 			format slot 3 of player with stone named " " to close
 			format slot 4 of player with stone named " " to close
 			format slot 5 of player with stone named " " to close
@@ -59,37 +78,41 @@ on right click on a player:
 			format slot 8 of player with stone named " " to close
 			stop
 		else:
-			send "&cBrak permisji do uzywanie tego"
+			send "%{_sprawdz.perm.msg}%"
 command /sprawdzaniee [<player>]:
-	permission: all.spr
-	permission message: Nie mozesz tego zrobic
+	permission: {_sprawdz.all.perm}
+	permission message: "%{_sprawdz.perm.msg}%"
 	trigger:
 		if arg-player is online:
 			set {aftertp.%arg 1%} to arg 1's location
 			teleport arg-1 to {LokSPR}
 			teleport player to {LokSPR}
+			set {AdminSPR.%player%} to player
 			send "%{_zapisywanieeq}%" to arg-1
+			send arg-1 title "%{_sprawdzanietag}%" with subtitle "%{_zapisywanieeq}%" for 5 seconds
 			wait 5 ticks
 			set {ekwipunek.%player-arg%} to serialized inventory of player-arg
 			set {inv.%player-arg%.helmet} to arg 1's helmet
 			set {inv.%player-arg%.chest} to arg 1's chestplate
 			set {inv.%player-arg%.legg} to arg 1's leggings
 			set {inv.%player-arg%.boots} to arg 1's boots
-			send "%{_eqzapisane}%" to arg-1
+			send arg-1 title "%{_sprawdzanietag}%" with subtitle "%{_eqzapisane}%" for 5 seconds
 			wait 5 ticks
 			clear arg 1's inventory
 			set {sprawdzanie} to true
 			set {sprawdzanie.arg-1} to true
 			set {sprawdzanie.region} to true
 		else:
-			send "&cGracz %arg-player% nie jest aktywny na serwerze."
+			replace all "(nick)" with "%arg-player%" in {_noplayer}
+			send "%{_noplayer}%"
 command /czystyy [<player>]:
-	permission: all.spr
-	permission message: Nie mozesz tego zrobic
+	permission: {_sprawdz.all.perm}
+	permission message: "%{_sprawdz.perm.msg}%"
 	trigger:
 		teleport argument-1 to {aftertp.%arg 1%}
-		send "%{_sprawdzaniekoniec}%" to arg-1
-		send "%{_zwracanieeq}%" to arg-1
+		send arg-1 title "%{_sprawdzanietag}%" with subtitle "%{_sprawdzaniekoniec}%" for 5 seconds
+		wait 5 seconds
+		send arg-1 title "%{_sprawdzanietag}%" with subtitle "%{_zwracanieeq}%" for 5 seconds
 		wait 2 seconds
 		set arg 1's helmet to {inv.%player-arg%.helmet}
 		set arg 1's chestplate to {inv.%player-arg%.chest}
@@ -98,54 +121,62 @@ command /czystyy [<player>]:
 		wait 1 second
 		restore inventory of player-arg from {ekwipunek.%player-arg%}
 		wait 1 second
-		send "%{_eqzwrocone}%" to arg-1
+		send arg-1 title "%{_sprawdzanietag}%" with subtitle "%{_eqzwrocone}%" for 5 seconds
+		send {AdminSPR.%player%} title "%{_sprawdzanietag}%" with subtitle "%{eq.gracza.zwrocone.adm}%" for 5 seconds
 		clear {aftertp.%arg 1%}
 		set {sprawdzanie} to false
 		set {sprawdzanie.region} to false
+		execute console command "pex user %arg-1% remove %{jestem.spr.perm}%"
 on rightclick on a sign:
-	if player has permission "sprawdzany.gracz":
-		if line 1 of event-block is "&c&lSPRAWDZANIE":
-			if line 3 of event-block is "&4&lKLIK MNIE":
+	if player has permission "%{jestem.spr.perm}%":
+		if line 1 of event-block is "%{_sign1line.spr}%":
+			if line 3 of event-block is "%{_sign3line.spr}%":
 				make player execute command "sprawdzaniegui"
+	else:
+		send "%{_sprawdzany.gracz.no.perm}%"
 command /sprawdzaniegui:
-	permission: all.spr
-	permission message: Nie mozesz tego zrobic
+	permission: {jestem.spr.perm}
+	permission message: "%{_sprawdz.perm.msg}%"
 	trigger:
 		if {sprawdzanie} is true:
-			open chest with 1 rows named "&cSPRAWDZANIE" to player
+			open chest with 1 rows named "%{_sprawdzanietag}%" to player
 			wait 2 tick
 			format slot 0 of player with red glass named " " to close
 			format slot 1 of player with red glass named " " to close
 			format slot 2 of player with red glass named " " to close		
-			format slot 3 of player with stone named " " to close
+			format slot 3 of player with stone named "-" to close
 			format slot 4 of player with tripwire hook named "&c&lNieprzyznanie SIE" to close then run "nieprzyznanie %player%"
 			format slot 5 of player with blaze powder named "&c&lPRZYZNANIE SIE" to close then run "banicja %player%"
 			format slot 6 of player with red glass named " " to close
 			format slot 7 of player with red glass named " " to close
 			format slot 8 of player with red glass named " " to close
 		else:
-			send "&c Nikt nie jest teraz sprawdzany, nie mozesz tego zrobic"
+			send "%{_noone.check}%"
 command /banicja [<player>]:
-	permission: all.spr
+	permission: {jestem.spr.perm}
+	permission message: "%{_sprawdz.perm.msg}%"
 	trigger:
 		replace all "(nick)" with "%player-arg%" in {_komendatresc}
 		execute console command "/%{_komendatresc}%"
 command /nieprzyznanie [<player>]:
+	permission: {jestem.spr.perm}
+	permission message: "%{_sprawdz.perm.msg}%"
 	trigger:
 		if arg-player is online:
 			replace all "(nick)" with "%player-arg%" in {_nieprzyznanie}
-			send "%{_nieprzyznanie}%" to arg-1
-			send "&aGracz %arg-player% nie przyznal sie do cheatow musi byc sprawdzany" to ops
+			send {AdminSPR.%player%} title "%{_sprawdzanietag}%" with subtitle "%{_nieprzyznanie}%" for 5 seconds
+			display "&aGracz %arg-player% nie przyznal sie." on bossbar with 100 percent by 10 seconds for {AdminSPR.%player%}
 		else:
-			send "&cGracz %arg-player% nie jest aktywny na serwerze."
+			send "%{_noplayer}%"
 command /lokacjaspr:
-	permission: all.spr
-	permission message: Nie mozesz tego zrobic
+	permission: {_sprawdz.all.perm}
+	permission message: "%{_sprawdz.perm.msg}%"
 	trigger:
 		set {LokSPR} to location of player
 
 command /sprawdzeq2 <player>:
-	permission: view.view
+	permission: {_sprawdz.all.perm}
+	permission message: "%{_sprawdz.perm.msg}%"
 	trigger:
 		set {target.%player%} to arg 1
 		wait 1 tick
@@ -169,16 +200,18 @@ command /sprawdzeq2 <player>:
 		set {sprawdzeq.leggings.%arg 1%} to arg 1's leggings
 		set {sprawdzeq.boots.%arg 1%} to arg 1's boots
 		if arg 1's gamemode is survival:
-			format slot 3 of player with 20 glistering melon named "&cPlayer health points" with lore "&6%{_health.%arg 1%}% ?" to be unstealable
+			format slot 3 of player with 20 glistering melon named "&cPunkty Zycia Gracza" with lore "&6%{_health.%arg 1%}% ?" to be unstealable
 		if arg 1's gamemode is survival:
-			format slot 2 of player with 4 diamond chestplate named "&cPlayer armor" to close then run [make player execute command "sprawdzeq %arg 1%"]
+			format slot 2 of player with 4 diamond chestplate named "&cZbroja Gracza" to close then run [make player execute command "sprawdzeq %arg 1%"]
 		else:
-			format slot 2 of player with 4 diamond chestplate named "&cPlayer armor" to close then run [make player execute command "sprawdzeq %arg 1%"]
-		format slot 6 of player with 2 paper named "&eUaktualnij!" with lore "&7" to close then run [make player execute command "vreload"]
+			format slot 2 of player with 4 diamond chestplate named "&cGRACZ MA GM!" to close then run [make player execute command "sprawdzeq %arg 1%"]
+			format slot 3 of player with 20 glistering melon named "&cGRACZ MA GM" with lore "&cGRACZ MA GM!" to be unstealable
+			stop
 command /sprawdzeq <player>:
-	permission: view.view
+	permission: {_sprawdz.all.perm}
+	permission message: "%{_sprawdz.perm.msg}%"
 	trigger:
-		open chest with 1 row named "%arg 1%" to player
+		open chest with 1 row named "&c EQ Gracza &b%arg 1%" to player
 		wait 2 tick
 		set {armor.%arg 1%.1} to helmet of arg 1
 		set {armor.%arg 1%.2} to chestplate of arg 1
