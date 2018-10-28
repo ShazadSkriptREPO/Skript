@@ -42,7 +42,7 @@ sprpermmsg: 'Brak permisji do wykonania tej akcji, nie jestes teraz sprawdzany.'
 #Permisja gracza sprawdzanego
 jestemsprperm: 'jestem.spr.perm'
 #Wiadomosc do sprawdzającego o zwrocie eq i zakonczeniu sprawdzania
-eqzwroconemsg: 'Itemy gracza zostaly zwrocone a sprawdzanie zakoncozne."
+eqzwroconemsg: 'Itemy gracza zostaly zwrocone a sprawdzanie zakoncozne.'
 #  _  ______  _   _ _____ ______ _____    _____ ____  _   _ ______ _____ _____ _    _ 
 # | |/ / __ \| \ | |_   _|  ____/ ____|  / ____/ __ \| \ | |  ____|_   _/ ____| |  | |
 # | ' / |  | |  \| | | | | |__ | |      | |   | |  | |  \| | |__    | || |  __| |  | |
