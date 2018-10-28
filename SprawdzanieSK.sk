@@ -58,6 +58,7 @@ command /sprtest:
 on right click on a player:
 	if player's tool is {_narzedzieid}:
 		if player has permission "all.spr":
+			set %clicked entity% to "eq.gracz.%clicked entity%"
 			name of tool is "%{_narzedzienazwa}%":
 				set %clicked entity% to "eq.gracz.%clicked entity%"
 				open chest with 1 rows named "%{_gui}%" to player
