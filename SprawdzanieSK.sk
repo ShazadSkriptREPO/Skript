@@ -55,9 +55,9 @@ command /sprtest:
 		give {_narzedzienazwa} named {_narzedzie} to player
 		send "&aNarzedzie dodane do twojego ekwipunku."
 #GUI ADMINA
-on right click on a player:
-	name of player tool is "%{_narzedzienazwa}%":
-		set %clicked entity% to "eq.gracz.%clicked entity%"
+on right click on player:
+	if player is holding {_narzedzieid} named "{_narzedzienazwa}":
+		set {eq.gracz.%clicked entity%} to clicked entity
 		if player has permission "all.spr":
 			set %clicked entity% to "eq.gracz.%clicked entity%"
 			open chest with 1 rows named "%{_gui}%" to player
