@@ -33,7 +33,7 @@ on load:
 	if file "plugins/Skript/SprawdzanieCONFIG/config.yml" doesn't exists:
 		send "&cNie znaleziono configu.. trwa pobieranie" to console
 		wait 3 seconds
-		download from "https://raw.githubusercontent.com/ShazadSkriptREPO/Skript/master/SprawdzanieCONFIG" to "plugins/Skript/scripts/SprawdzanieCONFIG/config.yml"
+		download from "https://raw.githubusercontent.com/ShazadSkriptREPO/Skript/master/config.yml" to "plugins/Skript/scripts/config.yml"
 		set {_guinazwa} to yaml value "gui" from "SprawdzanieCONFIG/config.yml"
 		set {_narzedzienazwa} to yaml value "narzedzienazwa" from "SprawdzanieCONFIG/config.yml"
 		set {_narzedzieid} to yaml value "narzedzieid" from "SprawdzanieCONFIG/config.yml"
