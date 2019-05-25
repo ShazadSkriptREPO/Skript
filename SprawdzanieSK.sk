@@ -10,7 +10,7 @@
 # Zabraniam podszywania się pod autora skryptu. Wszelkie próby tego typu będą karane.
 # Edytować można jedynie config.yml
 
-#Sprawdzanie 1.0#
+#Sprawdzanie 1.1#
 on load:
 	set {_version} to content of file "plugins/Skript/scripts/SprawdzanieSK.sk"
 	set {_v} to index of "##" in {_version}
