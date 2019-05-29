@@ -12,19 +12,6 @@
 
 #Sprawdzanie 1.2#
 on script load:
-	set {_version} to content of file "plugins/Skript/scripts/SprawdzanieSK.sk"
-	set {_v} to index of "##" in {_version}
-	set {_v2} to subtext of {_version} from character ({_v}+1) to character (length of {_version})
-	set {_v3} to index of "##" in {_v2}
-	set {version} to subtext of {_version} from character ({_v}+1) to character ({_v3})
-	set {_version} to result of connect to "https://raw.githubusercontent.com/ShazadSkriptREPO/Skript/master/SprawdzanieSK.sk"
-	set {_v} to index of "##" in {_version}
-	set {_v2} to subtext of {_version} from character ({_v}+1) to character (length of {_version})
-	set {_v3} to index of "##" in {_v2}
-	set {version.new} to subtext of {_version} from character ({_v}+1) to character ({_v3})
-	{version} is not {version.new}:
-		download "https://raw.githubusercontent.com/ShazadSkriptREPO/Skript/master/SprawdzanieSK.sk" to "plugins/Skript/scripts/SprawdzanieSK.sk"
-		stop
 	if file "plugins/SprawdzanieCONFIG/config.yml" doesn't exists:
 		create file "plugins/SprawdzanieCONFIG/config.yml"
 		send "&cNie znaleziono configu.. trwa pobieranie" to console
@@ -50,6 +37,20 @@ on script load:
 		set {_sprawdz.perm.msg} to yaml value "sprpermmsg" from "plugins/SprawdzanieCONFIG/config.yml"
 		set {_eq.gracza.zwrocone.adm} to yaml value "eqzwroconeadm" from "plugins/SprawdzanieCONFIG/config.yml"
 		send "&aPobrano config! :D" to console
+on script load:
+	set {_version} to content of file "plugins/Skript/scripts/SprawdzanieSK.sk"
+	set {_v} to index of "##" in {_version}
+	set {_v2} to subtext of {_version} from character ({_v}+1) to character (length of {_version})
+	set {_v3} to index of "##" in {_v2}
+	set {version} to subtext of {_version} from character ({_v}+1) to character ({_v3})
+	set {_version} to result of connect to "https://raw.githubusercontent.com/ShazadSkriptREPO/Skript/master/SprawdzanieSK.sk"
+	set {_v} to index of "##" in {_version}
+	set {_v2} to subtext of {_version} from character ({_v}+1) to character (length of {_version})
+	set {_v3} to index of "##" in {_v2}
+	set {version.new} to subtext of {_version} from character ({_v}+1) to character ({_v3})
+	{version} is not {version.new}:
+		download "https://raw.githubusercontent.com/ShazadSkriptREPO/Skript/master/SprawdzanieSK.sk" to "plugins/Skript/scripts/SprawdzanieSK.sk"
+		stop
 		
 command /sprtest:
 	permission: {_sprawdz.all.perm}
