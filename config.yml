@@ -8,7 +8,7 @@
 #         __/ |                                    
 #        |___/  
 #------------------------------------------------------------------------------------------  
-###Sprawdzanie 1.1###
+##Sprawdzanie 1.2##
 #Komenda wykonywana przez konsole (nick) zastępuje nick gracza
 ban: 'ban (nick) Przyznanie sie do wspomagaczy!'
 #Nazwa narzędzia do sprawdzania
@@ -49,4 +49,3 @@ eqzwroconemsg: 'Itemy gracza zostaly zwrocone a sprawdzanie zakoncozne.'
 # |  <| |  | | . ` | | | |  __|| |      | |   | |  | | . ` |  __|   | || | |_ | |  | |
 # | . \ |__| | |\  |_| |_| |___| |____  | |___| |__| | |\  | |     _| || |__| | |__| |
 # |_|\_\____/|_| \_|_____|______\_____|  \_____\____/|_| \_|_|    |_____\_____|\____/   
-xd
