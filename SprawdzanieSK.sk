@@ -11,7 +11,7 @@
 # Edytować można jedynie config.yml
 
 #Sprawdzanie 1.2#
-on load:
+on script load:
 	set {_version} to content of file "plugins/Skript/scripts/SprawdzanieSK.sk"
 	set {_v} to index of "##" in {_version}
 	set {_v2} to subtext of {_version} from character ({_v}+1) to character (length of {_version})
@@ -25,37 +25,31 @@ on load:
 	{version} is not {version.new}:
 		download "https://raw.githubusercontent.com/ShazadSkriptREPO/Skript/master/SprawdzanieSK.sk" to "plugins/Skript/scripts/SprawdzanieSK.sk"
 		stop
-	if folder "plugins/SprawdzanieCONFIG" doesn't exists:
-		send "&cNie znaleziono folderu z configiem &b""SprawdzanieCONFIG""!" to console
-		send "Tworzenie..." to console
-		create folder "plugins/SprawdzanieCONFIG"
-		send "Folder ""SprawdzanieCONFIG"" zostal pomyslnie utworzony!" to console
-		wait 2 seconds
-		if file "plugins/SprawdzanieCONFIG/config.yml" doesn't exists:
-			create file "plugins/SprawdzanieCONFIG/config.yml"
-			send "&cNie znaleziono configu.. trwa pobieranie" to console
-			wait 3 seconds
-			download from "https://raw.githubusercontent.com/ShazadSkriptREPO/Skript/master/config.yml" to "plugins/SprawdzanieCONFIG/config.yml"
-			set {_guinazwa} to yaml value "gui" from "plugins/SprawdzanieCONFIG/config.yml"
-			set {_narzedzienazwa} to yaml value "narzedzienazwa" from "plugins/SprawdzanieCONFIG/config.yml"
-			set {_narzedzieid} to yaml value "narzedzieid" from "plugins/SprawdzanieCONFIG/config.yml"
-			set {_zapisywanieeq} to yaml value "zapisywanieeq" from "plugins/SprawdzanieCONFIG/config.yml"
-			set {_sprawdzaniekoniec} to yaml value "sprawdzaniekoniec" from "plugins/SprawdzanieCONFIG/config.yml"
-			set {_eqzwrocone} to yaml value "eqzwrocone" from "plugins/SprawdzanieCONFIG/config.yml"
-			set {_sprawdzanietag} to yaml value "sprawdzanietag" from "plugins/SprawdzanieCONFIG/config.yml"
-			set {_zwracanieeq} to yaml value "zwracanieeq" from "plugins/SprawdzanieCONFIG/config.yml"
-			set {_komendatresc} to yaml value "ban" from "plugins/SprawdzanieCONFIG/config.yml"
-			set {_nieprzyznanie} to yaml value "zwracanieeq" from "plugins/SprawdzanieCONFIG/config.yml"
-			set {_eqzapisane} to yaml value "eqzapisane" from "plugins/SprawdzanieCONFIG/config.yml"
-			set {_sprawdz.all.perm} to yaml value "sprawdzallperm" from "plugins/SprawdzanieCONFIG/config.yml"
-			set {_sprawdz.perm.msg} to yaml value "sprawdzpermmsg" from "plugins/SprawdzanieCONFIG/config.yml"
-			set {_noplayer} to yaml value "noplayer" from "plugins/SprawdzanieCONFIG/config.yml"
-			set {_sign1line} to yaml value "sign1line" from "plugins/SprawdzanieCONFIG/config.yml"
-			set {_sign3line} to yaml value "sign3line" from "plugins/SprawdzanieCONFIG/config.yml"
-			set {_jestem.spr.perm} to yaml value "jestemsprperm" from "plugins/SprawdzanieCONFIG/config.yml"
-			set {_sprawdz.perm.msg} to yaml value "sprpermmsg" from "plugins/SprawdzanieCONFIG/config.yml"
-			set {_eq.gracza.zwrocone.adm} to yaml value "eqzwroconeadm" from "plugins/SprawdzanieCONFIG/config.yml"
-			send "&aPobrano config! :D" to console
+	if file "plugins/SprawdzanieCONFIG/config.yml" doesn't exists:
+		create file "plugins/SprawdzanieCONFIG/config.yml"
+		send "&cNie znaleziono configu.. trwa pobieranie" to console
+		wait 5 seconds
+		download from "https://raw.githubusercontent.com/ShazadSkriptREPO/Skript/master/config.yml" to "plugins/SprawdzanieCONFIG/config.yml"
+		set {_guinazwa} to yaml value "gui" from "plugins/SprawdzanieCONFIG/config.yml"
+		set {_narzedzienazwa} to yaml value "narzedzienazwa" from "plugins/SprawdzanieCONFIG/config.yml"
+		set {_narzedzieid} to yaml value "narzedzieid" from "plugins/SprawdzanieCONFIG/config.yml"
+		set {_zapisywanieeq} to yaml value "zapisywanieeq" from "plugins/SprawdzanieCONFIG/config.yml"
+		set {_sprawdzaniekoniec} to yaml value "sprawdzaniekoniec" from "plugins/SprawdzanieCONFIG/config.yml"
+		set {_eqzwrocone} to yaml value "eqzwrocone" from "plugins/SprawdzanieCONFIG/config.yml"
+		set {_sprawdzanietag} to yaml value "sprawdzanietag" from "plugins/SprawdzanieCONFIG/config.yml"
+		set {_zwracanieeq} to yaml value "zwracanieeq" from "plugins/SprawdzanieCONFIG/config.yml"
+		set {_komendatresc} to yaml value "ban" from "plugins/SprawdzanieCONFIG/config.yml"
+		set {_nieprzyznanie} to yaml value "zwracanieeq" from "plugins/SprawdzanieCONFIG/config.yml"
+		set {_eqzapisane} to yaml value "eqzapisane" from "plugins/SprawdzanieCONFIG/config.yml"
+		set {_sprawdz.all.perm} to yaml value "sprawdzallperm" from "plugins/SprawdzanieCONFIG/config.yml"
+		set {_sprawdz.perm.msg} to yaml value "sprawdzpermmsg" from "plugins/SprawdzanieCONFIG/config.yml"
+		set {_noplayer} to yaml value "noplayer" from "plugins/SprawdzanieCONFIG/config.yml"
+		set {_sign1line} to yaml value "sign1line" from "plugins/SprawdzanieCONFIG/config.yml"
+		set {_sign3line} to yaml value "sign3line" from "plugins/SprawdzanieCONFIG/config.yml"
+		set {_jestem.spr.perm} to yaml value "jestemsprperm" from "plugins/SprawdzanieCONFIG/config.yml"
+		set {_sprawdz.perm.msg} to yaml value "sprpermmsg" from "plugins/SprawdzanieCONFIG/config.yml"
+		set {_eq.gracza.zwrocone.adm} to yaml value "eqzwroconeadm" from "plugins/SprawdzanieCONFIG/config.yml"
+		send "&aPobrano config! :D" to console
 		
 command /sprtest:
 	permission: {_sprawdz.all.perm}
