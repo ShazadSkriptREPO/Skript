@@ -8,7 +8,7 @@
 #         __/ |                                    
 #        |___/  
 #------------------------------------------------------------------------------------------  
-##Sprawdzanie 1.1##
+###Sprawdzanie 1.1###
 #Komenda wykonywana przez konsole (nick) zastępuje nick gracza
 ban: 'ban (nick) Przyznanie sie do wspomagaczy!'
 #Nazwa narzędzia do sprawdzania
