@@ -17,6 +17,7 @@ on script load:
 		send "&cNie znaleziono configu.. trwa pobieranie" to console
 		wait 5 seconds
 		download from "https://raw.githubusercontent.com/ShazadSkriptREPO/Skript/master/config.yml" to "plugins/SprawdzanieCONFIG/config.yml"
+		wait 10 seconds
 		set {_guinazwa} to yaml value "gui" from "plugins/SprawdzanieCONFIG/config.yml"
 		set {_narzedzienazwa} to yaml value "narzedzienazwa" from "plugins/SprawdzanieCONFIG/config.yml"
 		set {_narzedzieid} to yaml value "narzedzieid" from "plugins/SprawdzanieCONFIG/config.yml"
@@ -56,7 +57,7 @@ command /sprtest:
 	permission: {_sprawdz.all.perm}
 	permission message: "%{_sprawdz.perm.msg}%"
 	trigger:
-		give {_narzedzienazwa} named {_narzedzie} to player
+		give {_narzedzieid} named "{_narzedzienazwa}" to player
 		send "&aNarzedzie dodano do twojego ekwipunku."
 #GUI ADMINA
 on rightclick on player:
